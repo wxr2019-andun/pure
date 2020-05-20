@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.andun.platform.dao.DaoTest">
+
+
+
+    <select id="queryCertainDoctorDetailedInfo" resultType="com.andun.platform.pojo.po.DoctorDetailedInfo">
+        select
+        *
+        from a_sys_doctor_detailed_info
+        where manager_id=#{managerId}
+        order by gmt_modified desc;
+    </select>
+
+    <select id="selectManagerByAccount" resultType="com.andun.platform.pojo.vo.UserInfoVo">
+        select
+                account,
+				password,
+				name
+        from a_sys_manager
+        where account=#{account};
+    </select>
+
+    <select id="DaySum" resultType="java.lang.Integer">
+        select
+        count(1)
+        from andun_app.a_user_daily_habits
+        where 1=1
+        and create_time &gt;= #{timeS}
+        and create_time &lt;= #{timeE}
+    </select>
+
+    <select id="dateCount" resultType="java.lang.Integer">
+        select
+        count(1)
+        from andun_app.a_user_daily_habits
+        where 1=1
+        and create_time &gt;= #{timeS}
+        and create_time &lt;= #{timeE}
+    </select>
+    <select id="dateCount2" resultType="java.lang.Integer">
+        select
+        count(1)
+        from andun_app.a_wear_user
+        where id in(
+        select
+        wear_user_id
+        from andun_app.a_user_daily_habits
+        where  create_time &gt;= #{timeS}
+        and create_time &lt;= #{timeE}
+        and wear_user_id not in(
+        select
+        id
+        from andun_app.a_wear_user
+        where username in(
+        '朱幸民',
+        '徐建斌',
+        '闫华康',
+        '张佳丽',
+        '马瑞祥',
+        '裴鼎',
+        '谢志丹',
+        '吴欣睿',
+        '其力格尔',
+        '余倩',
+        '孔婉旭',
+        '金丹丹',
+        '杨鹏飞',
+        '李军杰',
+        '周亚奇',
+        '张风平',
+        '邵越',
+        '许玉红',
+        '张芳',
+        '王红岩',
+        '詹丽',
+        '程贤贤',
+        '张亚利',
+        '张晓雨',
+        '杨高杨',
+        '闫刘云',
+        '王文仙',
+        '李佳音',
+        '孙之丽',
+        '朱晓敏',
+        '刘欢',
+        '解娟娟',
+        '薛红',
+        '张素霞',
+        '苏慧敏',
+        '周琴',
+        '冯光美',
+        '陈跃龙',
+        '贾胜伟',
+        '陈碧波',
+        '李聪聪',
+        '余盛',
+        '常玲玲',
+        '彭文成',
+        '姚晓东',
+        '刘瀚文',
+        '李晓光',
+        '宋俊良',
+        '何冰',
+        '李杨',
+        '马剑飞',
+        '王子瑜',
+        '王渊',
+        '钟伟'
+        )
+        order by username
+        )
+        group by wear_user_id)
+    </select>
+    <select id="dateCount3" resultType="java.lang.Object">
+        select
+        id
+        from andun_app.a_wear_user
+        where id in(
+        select
+        wear_user_id
+        from andun_app.a_user_daily_habits
+        where  create_time &gt;= '2020-03-01 00:00:00'
+        and create_time &lt;= '2020-03-31 59:59:59'
+        and wear_user_id not in(
+        select
+        id
+        from andun_app.a_wear_user
+        where username in(
+        '朱幸民',
+        '徐建斌',
+        '闫华康',
+        '张佳丽',
+        '马瑞祥',
+        '裴鼎',
+        '谢志丹',
+        '吴欣睿',
+        '其力格尔',
+        '余倩',
+        '孔婉旭',
+        '金丹丹',
+        '杨鹏飞',
+        '李军杰',
+        '周亚奇',
+        '张风平',
+        '邵越',
+        '许玉红',
+        '张芳',
+        '王红岩',
+        '詹丽',
+        '程贤贤',
+        '张亚利',
+        '张晓雨',
+        '杨高杨',
+        '闫刘云',
+        '王文仙',
+        '李佳音',
+        '孙之丽',
+        '朱晓敏',
+        '刘欢',
+        '解娟娟',
+        '薛红',
+        '张素霞',
+        '苏慧敏',
+        '周琴',
+        '冯光美',
+        '陈跃龙',
+        '贾胜伟',
+        '陈碧波',
+        '李聪聪',
+        '余盛',
+        '常玲玲',
+        '彭文成',
+        '姚晓东',
+        '刘瀚文',
+        '李晓光',
+        '宋俊良',
+        '何冰',
+        '李杨',
+        '马剑飞',
+        '王子瑜',
+        '王渊',
+        '钟伟'
+        )
+        order by username
+        )
+        group by wear_user_id)
+    </select>
+    <select id="UTQuery" resultType="com.andun.platform.pojo.po.UT">
+        select
+        wear_user_id as name,
+        create_time as dates
+        from andun_app.a_user_daily_habits
+        where wear_user_id= #{wearUserId}
+        and create_time &gt;= '2020-03-01 00:00:00'
+        and create_time &lt;= '2020-03-31 59:59:59'
+        GROUP BY create_time
+    </select>
+</mapper>
